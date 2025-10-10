@@ -1,0 +1,15 @@
+{
+  "lint-staged": {
+    "*.ts": [
+      "npx @biomejs/biome lint --write",
+      "npx @biomejs/biome check --write"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.5",
+    "husky": "^9.1.7"
+  },
+  "scripts": {
+    "prepare": "husky"
+  }
+}
