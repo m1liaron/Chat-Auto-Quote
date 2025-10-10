@@ -1,15 +1,6 @@
-import cors from "cors";
-import express, { type Application } from "express";
 import { EnvVariables } from "./common/enums/index.js";
 import { connectMongoDb } from "./db/connectMongoDB.js";
-import { registerRoutes } from "./helpers/helpers.js";
-
-const app: Application = express();
-
-app.use(express.json());
-app.use(cors());
-
-registerRoutes(app);
+import { app } from "./app.js";
 
 const port = EnvVariables.PORT || 3000;
 
@@ -25,5 +16,3 @@ const start = async () => {
 };
 
 start();
-
-export { app };

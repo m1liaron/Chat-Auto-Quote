@@ -1,22 +1,8 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { describe, it, expect } from "vitest";
 import request from "supertest";
-import mongoose from "mongoose";
-import { app } from "../src/index";
-import { User } from "../src/models/User.model";
-import { EnvVariables } from "../src/common/enums";
-
-const TEST_DB_URI = EnvVariables.MONGO_URI;
+import { app } from "../src/app";
 
 describe("Auth Controller", () => {
-    beforeAll(async () => {
-        await mongoose.connect(TEST_DB_URI);
-        await User.deleteMany({});
-    });
-
-    afterAll(async () => {
-        await mongoose.connection.close();
-    });
-
     it("should register a new user", async () => {
         const res = await request(app)
             .post("/auth/register")
@@ -43,7 +29,6 @@ describe("Auth Controller", () => {
     });
 
     it("should not register duplicate email", async () => {
-        // first registration already happened in previous test
         const res = await request(app).post("/auth/register").send({
             firstName: "John",
             lastName: "Doe",
@@ -53,7 +38,7 @@ describe("Auth Controller", () => {
 
         expect(res.status).toBe(400);
         expect(res.body).toHaveProperty("error", true);
-        expect(res.body.message).toContain("already exist");
+        expect(res.body.message).toContain("User with email: john@example.com, already exist");
     });
 
     it("should login existing user", async () => {
