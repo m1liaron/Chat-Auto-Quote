@@ -1,8 +1,8 @@
 import { StatusCodes } from "http-status-codes";
-import type { AuthRequestHandler } from "../common/types/types.js";
+import type { RequestHandler } from "../common/types/types.js";
 import { User } from "../models/User.model.js";
 
-const register: AuthRequestHandler = async (req, res) => {
+const register: RequestHandler = async (req, res) => {
 	try {
 		const { firstName, lastName, email, password } = req.body;
 
@@ -31,7 +31,7 @@ const register: AuthRequestHandler = async (req, res) => {
 	}
 };
 
-const login: AuthRequestHandler = async (req, res) => {
+const login: RequestHandler = async (req, res) => {
 	try {
 		const { email, password } = req.body;
 

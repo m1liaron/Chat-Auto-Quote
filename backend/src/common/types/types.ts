@@ -1,1 +1,1 @@
-export type { AuthRequestHandler } from "./authController.js";
+export type { RequestHandler, AuthRequestHandler } from "./authController.js";
