@@ -1,0 +1,1 @@
+export { localStorageState } from "./localStorageState";
