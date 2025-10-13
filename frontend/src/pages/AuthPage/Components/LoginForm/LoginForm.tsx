@@ -1,16 +1,21 @@
 import type React from 'react';
-import { useState } from 'react';
+import { useState, useId } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppPath, ApiPath } from '@/common/enums';
 import axios from 'axios';
 import { useUser } from '@/contexts/UserProvider';
 import { setLocalStorageItem } from '@/helpers';
 import { localStorageState } from '@/common/constants';
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaGoogle, FaFacebookF } from 'react-icons/fa';
 import './LoginForm';
 
 const LoginForm: React.FC = () => {
+  const emailId = useId();
+  const passwordId = useId();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { setUser } = useUser();
@@ -36,40 +41,69 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
-      <form onSubmit={handleLogin} className="login-form">
-        <h2 className="login-title">Login</h2>
+      <div className="register-page">
+        <div className="register-card">
+          <div className="register-logo">
+            <div className="register-logo-box">𝑄</div>
+            <h2>Create Account</h2>
+            <p>Join us and start sharing inspiring quotes</p>
+          </div>
 
-        {error && <p className="login-error">{error}</p>}
+          <form onSubmit={handleLogin} className="register-form">
+            {error && <p className="register-error">{error}</p>}
 
-        <div>
-          <label className="login-label">Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            className="login-input"
-            placeholder="you@example.com"
-          />
+            <div className="input-group">
+              <FaEnvelope className="input-icon" />
+              <input
+                id={emailId}
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="input-group">
+              <FaLock className="input-icon" />
+              <input
+                id={passwordId}
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+
+            <button type="submit" className="register-button">
+              Login
+            </button>
+          </form>
+
+          <div className="divider">
+            <span>or continue with</span>
+          </div>
+
+          <div className="social-buttons">
+            <button type="button" className="social-btn google">
+              <FaGoogle /> Google
+            </button>
+            <button type="button" className="social-btn facebook">
+              <FaFacebookF /> Facebook
+            </button>
+          </div>
+
+          <p className="signin-link">
+            Already have an account? <Link to={AppPath.Register}>Sign in</Link>
+          </p>
         </div>
-
-        <div>
-          <label className="login-label">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            className="login-input"
-            placeholder="••••••••"
-          />
-        </div>
-
-        <button type="submit" className="login-button">
-          Login
-        </button>
-        <Link to={AppPath.Register}>Already have an account?</Link>      
-      </form>
-    </div>
+      </div>
   );
 };
 
