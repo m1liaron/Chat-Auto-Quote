@@ -5,7 +5,8 @@ const setLocalStorageItem = (key: LocalStorageKey, value: string) => {
 };
 
 const getLocalStorageItem = (key: LocalStorageKey) => {
-	localStorage.get(key);
+	const value = localStorage.get(key);
+	return value;
 };
 
 const removeLocalStorageItem = (key: LocalStorageKey) => {
