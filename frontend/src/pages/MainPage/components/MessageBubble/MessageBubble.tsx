@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import { apiClient } from "@/api/apiClient";
 import type { Message } from "@/common/types";
 import { useUser } from "@/contexts/UserProvider";
@@ -27,7 +28,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ id, text, time, left, use
       {showMessageEdit ? (
         <>
           <input value={messageText} placeholder={text} onChange={(e) => setMessageText(e.target.value)}/>
-          <button className="message__update__button" onClick={updateMessage}>update</button>
+          <button type="button" className="message__update__button" onClick={updateMessage}>update</button>
         </>
       ) : (
         <p>{messageText}</p>

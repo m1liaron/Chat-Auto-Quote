@@ -1,12 +1,13 @@
-import React from "react";
+import type React from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
 import { AppPath } from "./common/enums";
-import { MainPage, RegisterPage, LoginPage } from "./pages";
+import { MainPage } from "./pages";
 import { PublicRoute } from "./navigation";
+import { AuthPage } from "./pages/AuthPage/AuthPage";
 
 const App: React.FC = () => {
 
@@ -18,12 +19,12 @@ const App: React.FC = () => {
         } />
         <Route path={AppPath.Register} element={
           <PublicRoute>
-            <RegisterPage/>
+            <AuthPage/>
           </PublicRoute>
         } />
         <Route path={AppPath.Login} element={
           <PublicRoute>
-            <LoginPage/>
+            <AuthPage/>
           </PublicRoute>
         } />
       </Routes>

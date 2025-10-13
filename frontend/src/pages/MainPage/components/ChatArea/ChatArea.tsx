@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
 import "./ChatArea.css";
 import { MessageBubble } from "../MessageBubble/MessageBubble";
 import { ApiPath } from "@/common/enums";
@@ -40,7 +41,7 @@ const ChatWindow = () => {
         if (!chat?._id) return;
         if(!inputValue.trim()) return;
 
-        const message: Message = {
+        const _message: Message = {
             text: inputValue,
             time: new Date().toLocaleString(),
             chatId: chat?._id,
@@ -88,10 +89,10 @@ const ChatWindow = () => {
                     <img src="*" alt="Avatar" />
                     <input value={firstName} onChange={(e) => setFirstName(e.target.value)} className="chat__user__name"/>
                     <input value={lastName} onChange={(e) => setLastName(e.target.value)} className="chat__user__name" />
-                    <button onClick={updateChat}>Update</button>
+                    <button type="button" onClick={updateChat}>Update</button>
                 </div>
 
-                <button className="chat__remove__button" onClick={removeChat}>Remove Chat</button>
+                <button type="button" className="chat__remove__button" onClick={removeChat}>Remove Chat</button>
             </div>
             <div className="messages">
                 {messages.map((message) => <MessageBubble key={message._id || message.chatId} id={message._id || ""} text={message.text} time={message.time} left={message.userId !== user?._id} userId={message.userId || ""} />)}
@@ -104,7 +105,7 @@ const ChatWindow = () => {
                     placeholder="Type a message..."
                     onKeyDown={handleKeyPress}
                 />
-                <button onClick={sendMessage}>Send</button>
+                <button type="button" onClick={sendMessage}>Send</button>
             </div>
         </div>
     )

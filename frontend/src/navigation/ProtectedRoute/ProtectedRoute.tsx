@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "../../contexts/UserProvider";
 import { Navigate, useLocation } from "react-router-dom";
 import axios from "axios";

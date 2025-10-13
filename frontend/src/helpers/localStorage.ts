@@ -5,7 +5,7 @@ const setLocalStorageItem = (key: LocalStorageKey, value: string) => {
 };
 
 const getLocalStorageItem = (key: LocalStorageKey) => {
-	const value = localStorage.get(key);
+	const value = localStorage.getItem(key);
 	return value;
 };
 
