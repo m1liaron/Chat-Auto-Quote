@@ -1,6 +1,29 @@
 import { createContext, type ReactNode, useContext, useState } from "react";
 import type { Chat } from "../common/types";
 
+const defaultChats = [
+    {
+        _id: "1",
+        firstName: "Alice",
+        lastName: "Freeman",
+    },
+    {
+        _id: "2",
+        firstName: "Josefina",
+        lastName: "",
+    },
+    {
+        _id: "3",
+        firstName: "Alex",
+        lastName: "",
+    },
+    {
+        _id: "4",
+        firstName: "Peter",
+        lastName: ""
+    },
+]
+
 type ChatContextType = {
     chats: Chat[];
     setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
@@ -11,7 +34,7 @@ type ChatContextType = {
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
 const ChatsProvider = ({ children }: { children: ReactNode }) => {
-    const [chats, setChats] = useState<Chat[]>([]);
+    const [chats, setChats] = useState<Chat[]>(defaultChats);
     const [chat, setChat] = useState<Chat | null>(null);
 
     return (

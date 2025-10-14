@@ -7,8 +7,11 @@ import { useChats } from "@/contexts/ChatsProvider";
 import { useUser } from "@/contexts/UserProvider";
 import { apiClient } from "@/api/apiClient";
 import type { Chat, Message } from "@/common/types";
+import DefaultAvatar from "@/assets/images/default-avatar.jpg"
+import { getLocalStorageItem } from "@/helpers";
+import { localStorageState } from "@/common/constants";
 
-const ChatWindow = () => {
+const ChatArea = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [inputValue, setInputValue] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -39,15 +42,23 @@ const ChatWindow = () => {
 
     const sendMessage = () => {
         if (!chat?._id) return;
-        if(!inputValue.trim()) return;
+        if (!inputValue.trim()) return;
+        
+        const token = getLocalStorageItem(localStorageState.TOKEN);
+        if (!token) {
+            setInputValue("");
+            alert("Please login to send messages!")
+            return;
+        }
 
-        const _message: Message = {
+        const message: Message = {
             text: inputValue,
             time: new Date().toLocaleString(),
             chatId: chat?._id,
             userId: user?._id
         }
 
+        setMessages(prev => [...prev, message])
         setInputValue("");
     }
 
@@ -86,7 +97,7 @@ const ChatWindow = () => {
         <div className="chat-window">
             <div className="chat-header">
                 <div>
-                    <img src="*" alt="Avatar" />
+                    <img src={chat?.avatar || DefaultAvatar} alt="Avatar" />
                     <input value={firstName} onChange={(e) => setFirstName(e.target.value)} className="chat__user__name"/>
                     <input value={lastName} onChange={(e) => setLastName(e.target.value)} className="chat__user__name" />
                     <button type="button" onClick={updateChat}>Update</button>
@@ -111,4 +122,4 @@ const ChatWindow = () => {
     )
 }
 
-export { ChatWindow };  
+export { ChatArea };  

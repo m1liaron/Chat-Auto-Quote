@@ -1,7 +1,12 @@
+import { ChatArea } from "./components/ChatArea/ChatArea";
+import { UserListSidebar } from "./components/UserListSidebar/UserListSidebar";
 
 const MainPage = () => {
     return (
-        <h2>Main Page</h2>
+        <>
+            <UserListSidebar />
+            <ChatArea/>
+        </>
     )
 }
 
