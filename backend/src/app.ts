@@ -24,4 +24,4 @@ io.on("connection", connectionSocket);
 
 registerRoutes(app);
 
-export { app };
+export { app, server };

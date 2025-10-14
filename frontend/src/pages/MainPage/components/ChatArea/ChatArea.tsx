@@ -10,6 +10,10 @@ import type { Chat, Message } from "@/common/types";
 import DefaultAvatar from "@/assets/images/default-avatar.jpg"
 import { getLocalStorageItem } from "@/helpers";
 import { localStorageState } from "@/common/constants";
+import { io, Socket } from "socket.io-client";
+import NotificationSound from "@/assets/audio/notificaiton.mp3";
+
+let socket: Socket;
 
 const ChatArea = () => {
     const [messages, setMessages] = useState<Message[]>([]);
@@ -25,6 +29,38 @@ const ChatArea = () => {
             setLastName(chat.lastName);
         }
     }, [chat]);
+
+    useEffect(() => {
+        socket = io(ApiPath, {
+            auth: {
+                token: getLocalStorageItem(localStorageState.TOKEN)
+            }
+        });
+
+        socket.on("connect", () => {
+            console.log("Connected to socket server");
+        });
+
+        socket.on("receiveMessage", (data: Message) => {
+            console.log("Received message from server:", data);
+            setMessages((prevMessages) => [...prevMessages, data]);
+
+            if (data?.userId !== user?._id) {
+                const audio = new Audio(NotificationSound);
+
+                audio.play();
+                Notification.requestPermission().then(permission => {
+                    if(permission === "granted") {
+                        new Notification("New Message", { body: data.text })
+                    }
+                })
+            }
+        });
+
+          return () => {
+            socket.disconnect();
+          };
+    }, []);
 
     useEffect(() => {
         const fetchMessages = async () => {
@@ -58,7 +94,7 @@ const ChatArea = () => {
             userId: user?._id
         }
 
-        setMessages(prev => [...prev, message])
+        socket.emit("sendMessage", message);
         setInputValue("");
     }
 
