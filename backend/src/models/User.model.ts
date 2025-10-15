@@ -4,6 +4,7 @@ import { type Document, type Model, model, Schema } from "mongoose";
 import { EnvVariables } from "../common/enums/index.js";
 
 export interface IUser extends Document {
+	_id: string;
 	firstName: string;
 	lastName: string;
 	email: string;
