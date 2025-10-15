@@ -5,7 +5,7 @@ import { User } from "../models/User.model.js";
 
 interface AuthRequest extends Request {
 	user?: {
-		id: string;
+		userId: string;
 		name: string;
 	};
 }
@@ -44,7 +44,7 @@ const authMiddleware = async (
 				message: "Authentication invalid, user not found",
 			});
 		}
-		req.user = { id: decoded.userId, name: decoded.name };
+		req.user = { userId: decoded.userId, name: decoded.name };
 
 		next();
 	} catch (error) {

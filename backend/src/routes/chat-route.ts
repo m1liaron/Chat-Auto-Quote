@@ -1,16 +1,21 @@
 import express from "express";
+
 const router = express.Router();
 
+import type { RequestHandler } from "../common/types/authController.js";
 import {
-    getChats,
-    getChat,
-    getChatMessages,
-    createChat,
-    updateChat,
-    removeChat,
+	createChat,
+	getChat,
+	getChatMessages,
+	getChats,
+	removeChat,
+	updateChat,
 } from "../controllers/controllers.js";
 
-router.route("/").get(getChats).post(createChat);
+router
+	.route("/")
+	.get(getChats as RequestHandler)
+	.post(createChat);
 router.route("/:chatId").get(getChat).put(updateChat).delete(removeChat);
 router.route("/:chatId/messages").get(getChatMessages);
 

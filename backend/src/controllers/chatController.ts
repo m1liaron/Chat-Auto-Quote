@@ -1,10 +1,16 @@
 import { StatusCodes } from "http-status-codes";
-import type { RequestHandler } from "../common/types/authController.js";
+import { getRandomAvatar } from "../api/getRandomAvatar.js";
+import type {
+	AuthRequestHandler,
+	RequestHandler,
+} from "../common/types/authController.js";
 import { Chat, Message } from "../models/models.js";
 
-const getChats: RequestHandler = async (_req, res) => {
+const getChats: AuthRequestHandler = async (req, res) => {
 	try {
-		const chats = await Chat.find();
+		const { userId } = req.user;
+		console.log(userId);
+		const chats = await Chat.find({ userId });
 
 		res.status(StatusCodes.OK).json(chats);
 	} catch (error) {
@@ -46,8 +52,13 @@ const createChat: RequestHandler = async (req, res) => {
 				message: "firstName and lastName are required.",
 			});
 		}
-
-		const newChat = await Chat.create({ firstName, lastName, userId });
+		const randomAvatar = getRandomAvatar();
+		const newChat = await Chat.create({
+			firstName,
+			lastName,
+			userId,
+			avatar: randomAvatar,
+		});
 		res.status(StatusCodes.OK).json(newChat);
 	} catch (error) {
 		res

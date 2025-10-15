@@ -1,5 +1,7 @@
 import { StatusCodes } from "http-status-codes";
+import { getRandomAvatar } from "../api/getRandomAvatar.js";
 import type { RequestHandler } from "../common/types/types.js";
+import { Chat } from "../models/Chat.model.js";
 import { User } from "../models/User.model.js";
 
 const register: RequestHandler = async (req, res) => {
@@ -20,8 +22,26 @@ const register: RequestHandler = async (req, res) => {
 			return;
 		}
 
-		const user = await User.create({ firstName, lastName, email, password });
+		const randomUserAvatar = getRandomAvatar();
+		const user = await User.create({
+			firstName,
+			lastName,
+			email,
+			password,
+			avatar: randomUserAvatar,
+		});
 		const token = user.createJWT();
+
+		const chats = ["Alex Freeman", "Josefina Cool", "Martin Luter"];
+		for (let i = 0; i < chats.length; i++) {
+			const randomAvatar = getRandomAvatar();
+			await Chat.create({
+				firstName: chats[i].split(" ")[0],
+				lastName: chats[i].split(" ")[1] || "",
+				avatar: randomAvatar,
+				userId: user._id,
+			});
+		}
 
 		res.status(StatusCodes.CREATED).json({ user, token });
 	} catch (error) {

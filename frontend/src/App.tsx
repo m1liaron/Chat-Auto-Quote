@@ -8,6 +8,7 @@ import { AppPath } from "./common/enums";
 import { MainPage } from "./pages";
 import { PublicRoute } from "./navigation";
 import { AuthPage } from "./pages/AuthPage/AuthPage";
+import { ProtectedRoute } from "./navigation/ProtectedRoute/ProtectedRoute";
 
 const App: React.FC = () => {
 
@@ -15,7 +16,9 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route path={AppPath.Root} element={
-            <MainPage/>
+            <ProtectedRoute>
+              <MainPage/>
+            </ProtectedRoute>
         } />
         <Route path={AppPath.Register} element={
           <PublicRoute>
