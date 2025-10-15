@@ -6,10 +6,12 @@ import axios from 'axios';
 import { useUser } from '@/contexts/UserProvider';
 import { setLocalStorageItem } from '@/helpers';
 import { localStorageState } from '@/common/constants';
-import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaGoogle, FaFacebookF } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaFacebookF } from 'react-icons/fa';
 import './LoginForm';
+import { GoogleLogin } from '@react-oauth/google';
+import type { AuthFormProps } from '@/common/types';
 
-const LoginForm: React.FC = () => {
+const LoginForm: React.FC<AuthFormProps> = ({ handleGoogleLogin }) => {
   const emailId = useId();
   const passwordId = useId();
 
@@ -45,7 +47,7 @@ const LoginForm: React.FC = () => {
         <div className="register-card">
           <div className="register-logo">
             <div className="register-logo-box">𝑄</div>
-            <h2>Create Account</h2>
+            <h2>Get into account</h2>
             <p>Join us and start sharing inspiring quotes</p>
           </div>
 
@@ -91,16 +93,14 @@ const LoginForm: React.FC = () => {
           </div>
 
           <div className="social-buttons">
-            <button type="button" className="social-btn google">
-              <FaGoogle /> Google
-            </button>
+            <GoogleLogin onSuccess={handleGoogleLogin}/>
             <button type="button" className="social-btn facebook">
               <FaFacebookF /> Facebook
             </button>
           </div>
 
           <p className="signin-link">
-            Already have an account? <Link to={AppPath.Register}>Sign in</Link>
+            Don't have an account? <Link to={AppPath.Register}>Sign up</Link>
           </p>
         </div>
       </div>

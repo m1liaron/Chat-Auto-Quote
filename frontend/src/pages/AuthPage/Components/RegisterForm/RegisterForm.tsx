@@ -1,15 +1,14 @@
 import React, { useState, useId } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { GoogleCredentialResponse, GoogleLogin } from '@react-oauth/google';
-import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaGoogle, FaFacebookF, FaUser } from 'react-icons/fa';
+import { GoogleLogin } from '@react-oauth/google';
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaFacebookF, FaUser } from 'react-icons/fa';
 
 import { AppPath, ApiPath } from '@/common/enums';
 import axios from 'axios';
 import { useUser } from '@/contexts/UserProvider';
-import { setLocalStorageItem } from '@/helpers';
-import { localStorageState } from '@/common/constants';
+import type { AuthFormProps } from '@/common/types';
 
-const RegisterForm: React.FC = () => {
+const RegisterForm: React.FC<AuthFormProps> = ({ handleGoogleLogin }) => {
   const firstNameId = useId();
   const lastNameId = useId();
   const emailId = useId();
@@ -53,19 +52,6 @@ const RegisterForm: React.FC = () => {
       setError(response.data.error.message);
     }
   };
-
-  const handleGoogleLogin = async (credentials: GoogleCredentialResponse) => {
-    if(credentials?.credential) {
-      const response = await axios.post(`${ApiPath}/auth/google-login`, { credential: credentials.credential });
-      if(response.status <= 400) {
-        setUser(response.data.user);
-        setLocalStorageItem(localStorageState.TOKEN, response.data.token);
-        navigate(AppPath.Root);
-      } else {
-        setError(response.data.error.message)
-      }
-    }
-  }
 
   return (
       <div className="register-page">
@@ -158,7 +144,7 @@ const RegisterForm: React.FC = () => {
           </div>
 
           <div className="social-buttons">
-            <GoogleLogin onSuccess={handleGoogleLogin} onError={(errorResponse) => console.log(errorResponse)}/>
+            <GoogleLogin onSuccess={handleGoogleLogin}/>
             <button type="button" className="social-btn facebook">
               <FaFacebookF /> Facebook
             </button>
