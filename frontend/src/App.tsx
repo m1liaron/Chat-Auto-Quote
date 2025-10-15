@@ -9,8 +9,20 @@ import { MainPage } from "./pages";
 import { PublicRoute } from "./navigation";
 import { AuthPage } from "./pages/AuthPage/AuthPage";
 import { ProtectedRoute } from "./navigation/ProtectedRoute/ProtectedRoute";
+import { useEffect } from "react";
 
 const App: React.FC = () => {
+    
+  useEffect(() => {
+    window.fbAsyncInit = function () {
+      window.FB.init({
+        appId: process.env.REACT_APP_FACEBOOK_APP_ID!,
+        cookie: true,
+        xfbml: true,
+        version: 'v19.0',
+      });
+    };
+  }, []);
 
   return (
     <Router>

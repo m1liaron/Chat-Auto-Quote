@@ -6,10 +6,11 @@ import axios from 'axios';
 import { useUser } from '@/contexts/UserProvider';
 import { setLocalStorageItem } from '@/helpers';
 import { localStorageState } from '@/common/constants';
-import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaFacebookF } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import './LoginForm';
 import { GoogleLogin } from '@react-oauth/google';
 import type { AuthFormProps } from '@/common/types';
+import { FacebookLoginButton } from '../../FacebookLogin/FacebookLogin';
 
 const LoginForm: React.FC<AuthFormProps> = ({ handleGoogleLogin }) => {
   const emailId = useId();
@@ -94,9 +95,7 @@ const LoginForm: React.FC<AuthFormProps> = ({ handleGoogleLogin }) => {
 
           <div className="social-buttons">
             <GoogleLogin onSuccess={handleGoogleLogin}/>
-            <button type="button" className="social-btn facebook">
-              <FaFacebookF /> Facebook
-            </button>
+            <FacebookLoginButton/>
           </div>
 
           <p className="signin-link">

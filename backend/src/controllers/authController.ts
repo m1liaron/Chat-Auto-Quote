@@ -1,7 +1,7 @@
+import axios from "axios";
 import type { Request, Response } from "express";
 import { OAuth2Client } from "google-auth-library";
 import { StatusCodes } from "http-status-codes";
-
 import { getRandomAvatar } from "../api/getRandomAvatar.js";
 import { EnvVariables } from "../common/enums/env-variables.js";
 import type { RequestHandler } from "../common/types/types.js";
@@ -78,6 +78,47 @@ const googleLogin = async (req: GoogleRequest, res: Response) => {
 	}
 };
 
+const facebookLogin = async (req: Request, res: Response) => {
+	const { accessToken } = req.body;
+	if (!accessToken) {
+		return res
+			.status(StatusCodes.BAD_REQUEST)
+			.json({ message: "Missing Facebook access token" });
+	}
+
+	try {
+		const fbResponse = await axios.get(
+			`https://graph.facebook.com/me?fields=id,first_name,last_name,email,picture&access_token=${accessToken}`,
+		);
+		const {
+			id: facebookId,
+			first_name,
+			last_name,
+			email,
+			picture,
+		} = fbResponse.data;
+
+		let user = await User.findOne({ email });
+		if (!user) {
+			user = await User.create({
+				email,
+				firstName: first_name,
+				lastName: last_name,
+				facebookId,
+				avatar: picture?.data?.url,
+			});
+		}
+
+		const token = user.createJWT();
+		res.status(StatusCodes.OK).json({ user, token });
+	} catch (err) {
+		console.error(err);
+		res
+			.status(StatusCodes.UNAUTHORIZED)
+			.json({ message: "Facebook authentication failed" });
+	}
+};
+
 const register: RequestHandler = async (req, res) => {
 	try {
 		const { firstName, lastName, email, password } = req.body;
@@ -143,4 +184,4 @@ const login: RequestHandler = async (req, res) => {
 	}
 };
 
-export { register, login, googleLogin };
+export { register, login, googleLogin, facebookLogin };

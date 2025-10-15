@@ -1,4 +1,9 @@
-export { googleLogin, login, register } from "./authController.js";
+export {
+	facebookLogin,
+	googleLogin,
+	login,
+	register,
+} from "./authController.js";
 export {
 	createChat,
 	getChat,

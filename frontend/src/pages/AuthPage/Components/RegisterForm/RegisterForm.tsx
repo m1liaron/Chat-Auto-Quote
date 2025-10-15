@@ -1,12 +1,13 @@
 import React, { useState, useId } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
-import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaFacebookF, FaUser } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser } from 'react-icons/fa';
 
 import { AppPath, ApiPath } from '@/common/enums';
 import axios from 'axios';
 import { useUser } from '@/contexts/UserProvider';
 import type { AuthFormProps } from '@/common/types';
+import { FacebookLoginButton } from '../../FacebookLogin/FacebookLogin';
 
 const RegisterForm: React.FC<AuthFormProps> = ({ handleGoogleLogin }) => {
   const firstNameId = useId();
@@ -145,9 +146,7 @@ const RegisterForm: React.FC<AuthFormProps> = ({ handleGoogleLogin }) => {
 
           <div className="social-buttons">
             <GoogleLogin onSuccess={handleGoogleLogin}/>
-            <button type="button" className="social-btn facebook">
-              <FaFacebookF /> Facebook
-            </button>
+            <FacebookLoginButton/>
           </div>
 
           <p className="signin-link">
