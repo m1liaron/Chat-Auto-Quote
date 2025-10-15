@@ -56,13 +56,10 @@ const UserListSidebar: React.FC = () => {
         <div className="sidebar">
             <div className="top-bar">
                     {user?.avatar && (
-                        <>
-                            <div>
-                                <img src={user.avatar || DefaultAvatar} alt="User Avatar" className="avatar"/>
-                                <h3>{user.firstName} {user.lastName}</h3>
-                            </div>
-                            <button type="button" onClick={handleLogout}>Log Out</button>
-                        </>
+                        <div>
+                            <img src={user.avatar || DefaultAvatar} alt="User Avatar" className="avatar"/>
+                            <h3>{user.firstName} {user.lastName}</h3>
+                        </div>
                     )}
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
