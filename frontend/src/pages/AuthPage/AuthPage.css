@@ -1,0 +1,215 @@
+/* === Page Background === */
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f3f6ff 0%, #e8ebff 100%);
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #333;
+}
+
+/* === Card === */
+.register-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+/* === Logo and Title === */
+.register-logo-box {
+  background: linear-gradient(to right, #4f46e5, #7c3aed);
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  margin: 0 auto 0.75rem;
+}
+
+.register-logo h2 {
+  font-weight: 600;
+  margin: 0.5rem 0 0.25rem;
+}
+
+.register-logo p {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* === Form === */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.field-container{
+    text-align: left;
+}
+
+.login-label {
+    font-size: 15px;
+    margin:0;
+}
+
+/* === Inputs === */
+.input-group {
+  position: relative;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.65rem 2.5rem 0.65rem 2.5rem;
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #000;
+}
+
+.input-group input:focus {
+  outline: none;
+  background: #fff;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+/* === Error === */
+.register-error {
+  background: #ffe4e6;
+  color: #b91c1c;
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+/* === Submit Button === */
+.register-button {
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(to right, #4f46e5, #7c3aed);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.register-button:hover {
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  transform: translateY(-1px);
+}
+
+/* === Divider === */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem 0 1rem;
+}
+
+.divider span {
+  font-size: 0.85rem;
+  color: #6b7280;
+  position: relative;
+}
+
+.divider span::before,
+.divider span::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 100px;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.divider span::before {
+  right: 100%;
+  margin-right: 12px;
+}
+
+.divider span::after {
+  left: 100%;
+  margin-left: 12px;
+}
+
+/* === Social Buttons === */
+.social-buttons {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.social-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #000;
+}
+
+.social-btn.google:hover {
+  background: #f3f4f6;
+}
+
+.social-btn.facebook:hover {
+  background: #f3f4f6;
+}
+
+/* === Sign In Link === */
+.signin-link {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.signin-link a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signin-link a:hover {
+  text-decoration: underline;
+}

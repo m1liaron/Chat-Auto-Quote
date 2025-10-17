@@ -1,34 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import type React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
+import { AppPath } from "./common/enums";
+import { MainPage } from "./pages";
+import { PublicRoute } from "./navigation";
+import { AuthPage } from "./pages/AuthPage/AuthPage";
+import { ProtectedRoute } from "./navigation/ProtectedRoute/ProtectedRoute";
+import { useEffect } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+    
+  useEffect(() => {
+    window.fbAsyncInit = function () {
+      window.FB.init({
+        appId: process.env.REACT_APP_FACEBOOK_APP_ID!,
+        cookie: true,
+        xfbml: true,
+        version: 'v19.0',
+      });
+    };
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Router>
+      <Routes>
+        <Route path={AppPath.Root} element={
+            <ProtectedRoute>
+              <MainPage/>
+            </ProtectedRoute>
+        } />
+        <Route path={AppPath.Register} element={
+          <PublicRoute>
+            <AuthPage/>
+          </PublicRoute>
+        } />
+        <Route path={AppPath.Login} element={
+          <PublicRoute>
+            <AuthPage/>
+          </PublicRoute>
+        } />
+      </Routes>
+    </Router>
   )
 }
 
