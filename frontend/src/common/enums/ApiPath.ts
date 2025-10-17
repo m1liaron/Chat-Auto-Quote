@@ -1,3 +1,3 @@
-const ApiPath = "http://localhost:4000";
+const ApiPath = "https://chat-auto-quote.onrender.com";
 
 export { ApiPath };
